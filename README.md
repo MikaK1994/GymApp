@@ -1,30 +1,78 @@
-# Full Stack Frontend -aloitusprojekti 2026.09.01
+# React + TypeScript + Vite
 
-Tämä Moodlesta ladattava lähtöprojekti on teknologianeutraali, riippuvuuksista vapaa selainkäyttöliittymä. Sen tarkoitus on varmistaa, että jokainen opiskelija voi aloittaa turvallisesti myös silloin, kun projektin varsinainen framework- tai yritysympäristö ei ole vielä käytettävissä.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Tuettu ympäristö
+Currently, two official plugins are available:
 
-- moderni selain
-- Node.js 24 tai uudempi paikallista palvelinta, testejä ja build-esimerkkiä varten
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## Käynnistys
+## React Compiler
 
-```sh
-npm start
+The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+
+Note: This will impact Vite dev & build performances.
+You can also try [the experimental native React Compiler support in plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md#rust-react-compiler) by using `compiler: true` in the plugin options instead of using the Babel plugin.
+
+## Expanding the ESLint configuration
+
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
+
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+
 ```
 
-Avaa selaimessa `http://localhost:8080`.
+You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
 
-## Tarkistus
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
-```sh
-npm run lint
-npm test
-npm run build
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+
 ```
-
-Luo tiedostoista oma Git-repositorio ja tallenna ensimmäisen commitin SHA lähtötunnisteeksi. Sovita rakenne valittuun frontend-teknologiaan projektisuunnitelman hyväksymisen jälkeen.
-
-Älä tallenna repositorioon salasanoja, tokeneita, henkilötietoja, asiakastietoja, yrityksen luottamuksellista aineistoa tai tuotantolokeja. Käytä vain synteettistä testidataa.
-
-Lisenssi: Apache-2.0.
