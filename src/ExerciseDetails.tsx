@@ -1,51 +1,41 @@
-import { useState } from 'react'
-
-type WorkoutSet = {
-  weight: number | ''
-  reps: number
-  completed: boolean
-}
-
-type Exercise = {
-  name: string
-  sets: WorkoutSet[]
-}
+import type { Exercise } from './types'
 
 type ExerciseDetailsProps = {
   exercise: Exercise
+  onExerciseChange: (updatedExercise: Exercise) => void
 }
 
-function ExerciseDetails({ exercise }: ExerciseDetailsProps) {
-  const [currentExercise, setCurrentExercise] = useState(exercise)
+function ExerciseDetails({exercise, onExerciseChange,}: ExerciseDetailsProps) {
 
   function toggleSet(index: number) {
-    setCurrentExercise({
-      ...currentExercise,
-      sets: currentExercise.sets.map((set, setIndex) =>
+    const updatedExercise = {
+      ...exercise,
+      sets: exercise.sets.map((set, setIndex) =>
         setIndex === index
           ? { ...set, completed: !set.completed }
           : set
       ),
-    })
+    }
+    onExerciseChange(updatedExercise)
   }
 
   function updateWeight(index: number, weight: number | '') {
-    setCurrentExercise({
-        ...currentExercise,
-        sets: currentExercise.sets.map((set, setIndex) =>
+    const updatedExercise = {
+        ...exercise,
+        sets: exercise.sets.map((set, setIndex) =>
         setIndex === index
         ? { ...set, weight: weight }
         : set
        ),
-     })
+     }
+     onExerciseChange(updatedExercise)
    }
-
 
   return (
     <section>
       <h2>{exercise.name}</h2>
       <ul>
-        {currentExercise.sets.map((set, index) => (
+        {exercise.sets.map((set, index) => (
           <li key={index}>
             <input type="number" 
             value={set.weight}

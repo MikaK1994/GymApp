@@ -1,18 +1,12 @@
 import { useState } from 'react'
 import ExerciseDetails from './ExerciseDetails'
+import type { Exercise } from './types'
 
-type WorkoutSet = {
-  weight: number
-  reps: number
-  completed: boolean
-}
 
-type Exercise = {
-  name: string
-  sets: WorkoutSet[]
-}
+function ExerciseList() {
+  const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(null)
 
-const exercises: Exercise[] = [
+  const [exercises, setExecrises] = useState<Exercise[]>([
   {
     name: 'Penkkipunnerrus',
       sets: [
@@ -114,11 +108,16 @@ const exercises: Exercise[] = [
       },
     ],
   },
-]
+])
 
-
-function ExerciseList() {
-  const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(null)
+  function updateSelectedExercise(updatedExercise: Exercise) {
+    setExecrises(
+        exercises.map((exercise) =>
+            exercise.name === updatedExercise.name ? updatedExercise : exercise
+        )
+    )
+    setSelectedExercise(updatedExercise)
+  }
 
   return (
     <section>
@@ -134,7 +133,10 @@ function ExerciseList() {
        </ul>
 
       {selectedExercise && (
-        <ExerciseDetails exercise={selectedExercise}/>
+        <ExerciseDetails
+        exercise={selectedExercise}
+        onExerciseChange={updateSelectedExercise}
+        />
       )}
     </section>
   )
