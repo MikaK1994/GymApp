@@ -4,30 +4,53 @@ import ExerciseDetails from './ExerciseDetails'
 
 type Exercise = {
   name: string
-  sets: number
+  sets: WorkoutSet[]
+}
+
+type WorkoutSet = {
   weight: number
+  reps: number
+  completed: boolean
 }
 
 const exercises: Exercise[] = [
   {
     name: 'Penkkipunnerrus',
-    sets: 3,
-    weight: 60,
+    sets: [],
   },
   {
-    name: 'Kyykky',
-    sets: 4,
-    weight: 100,
+  name: 'Kyykky',
+  sets: [
+      {
+        weight: 100,
+        reps: 8,
+        completed: false,
+      },
+      {
+        weight: 100,
+        reps: 8,
+        completed: false,
+      },
+      {
+        weight: 100,
+        reps: 8,
+        completed: false,
+      },
+      {
+        weight: 90,
+        reps: 10,
+        completed: false,
+      },
+    ],
   },
+
   {
     name: 'Maastaveto',
-    sets: 3,
-    weight: 120,
+    sets: [],
   },
   {
     name: 'Kulmasoutu',
-    sets: 3,
-    weight: 60,
+    sets: [],
   },
 ]
 
@@ -40,13 +63,13 @@ function ExerciseList() {
       <h2>Harjoitukset</h2>
         <ul>
           {exercises.map((exercise) => (
-        <li key={exercise.name}>
+        <ul key={exercise.name}>
         <button onClick={() => setSelectedExercise(exercise)}>
-          {exercise.name} — {exercise.weight} kg × {exercise.sets} sarjaa
+          {exercise.name}
         </button>
-       </li>
-    ))}
-      </ul>
+       </ul>
+      ))}
+       </ul>
 
       {selectedExercise && (
         <ExerciseDetails exercise={selectedExercise}/>
