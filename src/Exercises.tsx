@@ -15,28 +15,49 @@ type Exercise = {
 const exercises: Exercise[] = [
   {
     name: 'Penkkipunnerrus',
-    sets: [],
+      sets: [
+      {
+        weight: 0,
+        reps: 8,
+        completed: false,
+      },
+      {
+        weight: 0,
+        reps: 8,
+        completed: false,
+      },
+      {
+        weight: 0,
+        reps: 8,
+        completed: false,
+      },
+      {
+        weight: 0,
+        reps: 10,
+        completed: false,
+      },
+    ],
   },
   {
   name: 'Kyykky',
   sets: [
       {
-        weight: 100,
+        weight: 0,
         reps: 8,
         completed: false,
       },
       {
-        weight: 100,
+        weight: 0,
         reps: 8,
         completed: false,
       },
       {
-        weight: 100,
+        weight: 0,
         reps: 8,
         completed: false,
       },
       {
-        weight: 90,
+        weight: 0,
         reps: 10,
         completed: false,
       },
@@ -45,11 +66,53 @@ const exercises: Exercise[] = [
 
   {
     name: 'Maastaveto',
-    sets: [],
+      sets: [
+      {
+        weight: 0,
+        reps: 8,
+        completed: false,
+      },
+      {
+        weight: 0,
+        reps: 8,
+        completed: false,
+      },
+      {
+        weight: 0,
+        reps: 8,
+        completed: false,
+      },
+      {
+        weight: 0,
+        reps: 10,
+        completed: false,
+      },
+    ],
   },
   {
     name: 'Kulmasoutu',
-    sets: [],
+      sets: [
+      {
+        weight: 0,
+        reps: 8,
+        completed: false,
+      },
+      {
+        weight: 0,
+        reps: 8,
+        completed: false,
+      },
+      {
+        weight: 0,
+        reps: 8,
+        completed: false,
+      },
+      {
+        weight: 0,
+        reps: 10,
+        completed: false,
+      },
+    ],
   },
 ]
 

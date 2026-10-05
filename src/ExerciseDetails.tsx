@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 type WorkoutSet = {
-  weight: number
+  weight: number | ''
   reps: number
   completed: boolean
 }
@@ -29,13 +29,29 @@ function ExerciseDetails({ exercise }: ExerciseDetailsProps) {
     })
   }
 
+  function updateWeight(index: number, weight: number | '') {
+    setCurrentExercise({
+        ...currentExercise,
+        sets: currentExercise.sets.map((set, setIndex) =>
+        setIndex === index
+        ? { ...set, weight: weight }
+        : set
+       ),
+     })
+   }
+
+
   return (
     <section>
-      <h2>{currentExercise.name}</h2>
+      <h2>{exercise.name}</h2>
       <ul>
         {currentExercise.sets.map((set, index) => (
           <li key={index}>
-            {set.weight} kg × {set.reps} toistoa
+            <input type="number" 
+            value={set.weight}
+            onChange={(event) => updateWeight(index, 
+            event.target.value === '' ? '' : Number(event.target.value))}/> 
+            kg x {set.reps} toistoa
             <button onClick={() => toggleSet(index)}>
             {set.completed ? "Tehty" : "Ei tehty"}
             </button>
