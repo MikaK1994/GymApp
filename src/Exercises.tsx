@@ -1,16 +1,15 @@
 import { useState } from 'react'
 import ExerciseDetails from './ExerciseDetails'
 
-
-type Exercise = {
-  name: string
-  sets: WorkoutSet[]
-}
-
 type WorkoutSet = {
   weight: number
   reps: number
   completed: boolean
+}
+
+type Exercise = {
+  name: string
+  sets: WorkoutSet[]
 }
 
 const exercises: Exercise[] = [
