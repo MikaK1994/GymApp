@@ -1,4 +1,4 @@
-import type { Movement, MovementCategory } from '../types'
+import type { Movement, MovementCategory } from '../types/types'
 
 export const movementCategories: MovementCategory[] = ['Rinta', 'Selkä', 'Jalat', 'Olkapäät', 'Kädet']
 

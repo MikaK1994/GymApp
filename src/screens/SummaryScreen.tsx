@@ -1,5 +1,5 @@
 import Glyph from '../components/Glyph'
-import type { CompletedExercise } from '../types'
+import type { CompletedExercise } from '../types/types'
 
 type SummaryScreenProps = {
   exercises: CompletedExercise[]

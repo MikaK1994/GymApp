@@ -1,6 +1,6 @@
 import Glyph from '../components/Glyph'
 import { movementCategories } from '../data/movements'
-import type { Filter, Movement } from '../types'
+import type { Filter, Movement } from '../types/types'
 
 type MovementScreenProps = {
   filter: Filter

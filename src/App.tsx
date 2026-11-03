@@ -7,7 +7,7 @@ import MovementScreen from './screens/MovementScreen'
 import SessionScreen from './screens/SessionScreen'
 import StatisticsScreen from './screens/StatisticsScreen'
 import SummaryScreen from './screens/SummaryScreen'
-import type { CategoryStat, CompletedExercise, Filter, MovementCategory, Screen, WorkoutRecord } from './types'
+import type { CategoryStat, CompletedExercise, Filter, MovementCategory, Screen, WorkoutRecord } from './types/types'
 import { movementCategories } from './data/movements'
 
 const workoutStorageKey = 'gymapp-recent-workouts'

@@ -1,4 +1,4 @@
-import type { GlyphName } from '../types'
+import type { GlyphName } from '../types/types'
 
 type GlyphProps = {
   name: GlyphName

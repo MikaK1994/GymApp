@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Glyph from '../components/Glyph'
-import type { WorkoutRecord } from '../types'
+import type { WorkoutRecord } from '../types/types'
 
 type HomeScreenProps = {
   recentWorkouts: WorkoutRecord[]

@@ -1,4 +1,4 @@
-import type { CategoryStat, MovementCategory } from '../types'
+import type { CategoryStat, MovementCategory } from '../types/types'
 
 type StatisticsScreenProps = {
   stats: CategoryStat[]
