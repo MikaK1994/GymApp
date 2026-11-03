@@ -35,7 +35,7 @@ function MovementScreen({ filter, query, selectedMovement, movements, onFilterCh
         {movements.map((movement) => (
           <button key={movement.name} className={`movement-item${selectedMovement === movement.name ? ' is-selected' : ''}`} onClick={() => onMovementSelect(movement.name)}>
             <span className="item-icon"><Glyph name={movement.icon} /></span>
-            <span className="item-copy"><strong>{movement.name}</strong><small>{movement.category ? `${movement.category} • ${movement.duration}` : movement.duration}</small></span>
+            <span className="item-copy"><strong>{movement.name}</strong><small>{[movement.category, movement.duration].filter(Boolean).join(' • ')}</small></span>
             <Glyph name="chevron" />
           </button>
         ))}
