@@ -402,6 +402,7 @@
 }
 
 .session-card {
+  min-width: 0;
   min-height: 92px;
   display: flex;
   flex-direction: column;
@@ -412,8 +413,19 @@
   background: var(--surface);
 }
 
+.session-card .eyebrow {
+  margin-bottom: 5px;
+}
+
+.session-value-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
 .session-number {
-  width: 100%;
+  min-width: 0;
+  flex: 1 1 auto;
   padding: 0;
   border: 0;
   color: var(--app-text);
@@ -421,15 +433,41 @@
   font-weight: 700;
   line-height: 1.05;
   background: transparent;
+  appearance: textfield;
+}
+
+.session-number::-webkit-inner-spin-button,
+.session-number::-webkit-outer-spin-button {
+  margin: 0;
+  appearance: none;
 }
 
 .session-number:focus-visible {
   outline-offset: 3px;
 }
 
-.session-card small {
-  color: var(--app-muted);
-  font-size: 9px;
+.stepper-button {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: var(--app-text);
+  background: var(--surface-raised);
+}
+
+.stepper-button:hover {
+  background: #4b5563;
+}
+
+.session-error {
+  margin: 10px 0 0;
+  color: #fca5a5;
+  font-size: 11px;
+  line-height: 1.4;
 }
 
 .session-actions {
@@ -439,16 +477,14 @@
   margin-top: 7px;
 }
 
-.session-actions .button:nth-child(4) {
-  margin-top: -12px;
-}
-
-.session-actions .button:nth-child(5) {
-  margin-top: -6px;
-}
-
-.session-actions .button:nth-child(6) {
-  margin-top: -6px;
+.save-confirmation {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: -12px 0 0;
+  color: #86efac;
+  font-size: 12px;
+  line-height: 1.2;
 }
 
 .page--summary {

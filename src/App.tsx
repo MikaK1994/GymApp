@@ -28,9 +28,10 @@ function App() {
       return []
     }
   })
-  const [weight, setWeight] = useState(22.5)
-  const [reps, setReps] = useState(8)
+  const [weight, setWeight] = useState<number | ''>(20)
+  const [reps, setReps] = useState<number | ''>(5)
   const [savedSets, setSavedSets] = useState(0)
+  const [sessionError, setSessionError] = useState('')
   const currentMovement = workoutMovements[currentMovementIndex] ?? 'Pystypunnerrus'
 
   const visibleMovements = movements.filter((movement) => {
@@ -60,8 +61,9 @@ function App() {
     setCurrentMovementIndex(0)
     setCompletedExercises([])
     setSavedSets(0)
-    setWeight(22.5)
-    setReps(8)
+    setWeight(20)
+    setReps(5)
+    setSessionError('')
     setScreen('session')
   }
 
@@ -72,7 +74,8 @@ function App() {
   }
 
   function saveSet() {
-    const completedSet = { weight, reps }
+    if (!validateSession()) return false
+    const completedSet = { weight: Number(weight), reps: Number(reps) }
     setCompletedExercises((completed) => {
       const exercise = completed.find((item) => item.name === currentMovement)
       if (!exercise) return [...completed, { name: currentMovement, sets: [completedSet] }]
@@ -81,16 +84,32 @@ function App() {
         : item)
     })
     setSavedSets((count) => count + 1)
+    return true
   }
 
   function nextMovement() {
+    if (!validateSession()) return
     setCurrentMovementIndex((index) => index + 1)
     setSavedSets(0)
-    setWeight(22.5)
-    setReps(8)
+    setWeight(20)
+    setReps(5)
+  }
+
+  function validateSession() {
+    if (weight === '' || Number(weight) <= 0) {
+      setSessionError('Anna painolle nollaa suurempi arvo.')
+      return false
+    }
+    if (reps === '' || Number(reps) <= 0) {
+      setSessionError('Anna toistoille nollaa suurempi arvo.')
+      return false
+    }
+    setSessionError('')
+    return true
   }
 
   function finishWorkout() {
+    if (!validateSession()) return
     if (completedExercises.length > 0) {
       const workout: WorkoutRecord = {
         id: new Date().toISOString(),
@@ -140,13 +159,15 @@ function App() {
             weight={weight}
             reps={reps}
             savedSets={savedSets}
+            error={sessionError}
             hasNextMovement={currentMovementIndex < workoutMovements.length - 1}
-            onWeightChange={setWeight}
-            onRepsChange={setReps}
+            onWeightChange={(value) => { setWeight(value); setSessionError('') }}
+            onRepsChange={(value) => { setReps(value); setSessionError('') }}
             onClose={() => changeScreen('home')}
-            onDecreaseWeight={() => setWeight((value) => Math.max(0, value - 2.5))}
-            onIncreaseWeight={() => setWeight((value) => value + 2.5)}
-            onIncreaseReps={() => setReps((value) => value + 1)}
+            onDecreaseWeight={() => setWeight((value) => value === '' ? '' : Math.max(0, value - 1))}
+            onIncreaseWeight={() => setWeight((value) => value === '' ? 1 : value + 1)}
+            onDecreaseReps={() => setReps((value) => value === '' ? '' : Math.max(0, value - 1))}
+            onIncreaseReps={() => setReps((value) => value === '' ? 1 : value + 1)}
             onSaveSet={saveSet}
             onNextMovement={nextMovement}
             onEndWorkout={finishWorkout}

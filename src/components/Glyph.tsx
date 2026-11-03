@@ -43,6 +43,12 @@ function Glyph({ name, size = 18 }: GlyphProps) {
       return <svg {...common}><path d="m9 18 6-6-6-6" /></svg>
     case 'share':
       return <svg {...common}><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><path d="m8.7 10.7 6.6-4.4m-6.6 7 6.6 4.1" /></svg>
+    case 'plus':
+      return <svg {...common}><path d="M12 5v14m-7-7h14" /></svg>
+    case 'minus':
+      return <svg {...common}><path d="M5 12h14" /></svg>
+    case 'check':
+      return <svg {...common}><path d="m5 12 4 4L19 6" /></svg>
   }
 }
 
