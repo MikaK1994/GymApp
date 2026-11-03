@@ -8,3 +8,19 @@ export type Movement = {
   duration: string
   icon: GlyphName
 }
+
+export type CompletedSet = {
+  weight: number
+  reps: number
+}
+
+export type CompletedExercise = {
+  name: string
+  sets: CompletedSet[]
+}
+
+export type WorkoutRecord = {
+  id: string
+  completedAt: string
+  exercises: CompletedExercise[]
+}

@@ -5,19 +5,19 @@ type SessionScreenProps = {
   weight: number
   reps: number
   savedSets: number
+  hasNextMovement: boolean
+  onWeightChange: (weight: number) => void
+  onRepsChange: (reps: number) => void
   onClose: () => void
   onDecreaseWeight: () => void
   onIncreaseWeight: () => void
   onIncreaseReps: () => void
   onSaveSet: () => void
+  onNextMovement: () => void
   onEndWorkout: () => void
 }
 
-function formatWeight(value: number) {
-  return `${Number.isInteger(value) ? value : value.toFixed(1).replace('.', ',')} kg`
-}
-
-function SessionScreen({ movementName, weight, reps, savedSets, onClose, onDecreaseWeight, onIncreaseWeight, onIncreaseReps, onSaveSet, onEndWorkout }: SessionScreenProps) {
+function SessionScreen({ movementName, weight, reps, savedSets, hasNextMovement, onWeightChange, onRepsChange, onClose, onDecreaseWeight, onIncreaseWeight, onIncreaseReps, onSaveSet, onNextMovement, onEndWorkout }: SessionScreenProps) {
   return (
     <>
       <header className="page-header page-header--session">
@@ -26,8 +26,8 @@ function SessionScreen({ movementName, weight, reps, savedSets, onClose, onDecre
       </header>
 
       <div className="session-stats">
-        <div className="session-card"><span className="eyebrow">Paino</span><strong className="session-number">{formatWeight(weight)}</strong><small>1RM-arvio 85 kg</small></div>
-        <div className="session-card"><span className="eyebrow">Toistot</span><strong className="session-number">{reps} / 12</strong><small>Tavoite 12 toistoa</small></div>
+        <label className="session-card"><span className="eyebrow">Paino (kg)</span><input className="session-number" type="number" min="0" step="0.5" value={weight} aria-label="Paino kilogrammoina" onChange={(event) => onWeightChange(Number(event.currentTarget.value))} /></label>
+        <label className="session-card"><span className="eyebrow">Toistot</span><input className="session-number" type="number" min="0" step="1" value={reps} aria-label="Toistojen määrä" onChange={(event) => onRepsChange(Number(event.currentTarget.value))} /></label>
       </div>
 
       <div className="session-actions">
@@ -35,6 +35,7 @@ function SessionScreen({ movementName, weight, reps, savedSets, onClose, onDecre
         <button className="button button--filled" onClick={onIncreaseWeight}>Lisää 2,5 kg</button>
         <button className="button button--filled" onClick={onIncreaseReps}>Lisää toisto</button>
         <button className="button button--primary" onClick={onSaveSet}>Tallenna sarja{savedSets > 0 ? ` (${savedSets})` : ''}</button>
+        {hasNextMovement && <button className="button button--filled" onClick={onNextMovement}>Seuraava liike</button>}
         <button className="button button--outline" onClick={onEndWorkout}>Lopeta treeni</button>
       </div>
     </>

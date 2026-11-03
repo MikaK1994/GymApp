@@ -4,15 +4,15 @@ import type { Filter, Movement } from '../types'
 type MovementScreenProps = {
   filter: Filter
   query: string
-  selectedMovement: string
+  selectedMovements: string[]
   movements: Movement[]
   onFilterChange: (filter: Filter) => void
   onQueryChange: (query: string) => void
-  onMovementSelect: (movementName: string) => void
+  onMovementToggle: (movementName: string) => void
   onStartWorkout: () => void
 }
 
-function MovementScreen({ filter, query, selectedMovement, movements, onFilterChange, onQueryChange, onMovementSelect, onStartWorkout }: MovementScreenProps) {
+function MovementScreen({ filter, query, selectedMovements, movements, onFilterChange, onQueryChange, onMovementToggle, onStartWorkout }: MovementScreenProps) {
   return (
     <>
       <header className="page-header page-header--list">
@@ -32,17 +32,28 @@ function MovementScreen({ filter, query, selectedMovement, movements, onFilterCh
       </div>
 
       <div className="movement-list">
-        {movements.map((movement) => (
-          <button key={movement.name} className={`movement-item${selectedMovement === movement.name ? ' is-selected' : ''}`} onClick={() => onMovementSelect(movement.name)}>
-            <span className="item-icon"><Glyph name={movement.icon} /></span>
-            <span className="item-copy"><strong>{movement.name}</strong><small>{[movement.category, movement.duration].filter(Boolean).join(' • ')}</small></span>
-            <Glyph name="chevron" />
-          </button>
-        ))}
+        {movements.map((movement) => {
+          const isSelected = selectedMovements.includes(movement.name)
+          return (
+            <button
+              key={movement.name}
+              type="button"
+              aria-pressed={isSelected}
+              className={`movement-item${isSelected ? ' is-selected' : ''}`}
+              onClick={() => onMovementToggle(movement.name)}
+            >
+              <span className="item-icon"><Glyph name={movement.icon} /></span>
+              <span className="item-copy"><strong>{movement.name}</strong><small>{[movement.category, movement.duration].filter(Boolean).join(' • ')}</small></span>
+              <Glyph name="chevron" />
+            </button>
+          )
+        })}
         {movements.length === 0 && <p className="empty-state">Liikkeitä ei löytynyt.</p>}
       </div>
 
-      <button className="button button--filled list-cta" onClick={onStartWorkout}>Aloita treeni</button>
+      <button className="button button--filled list-cta" disabled={selectedMovements.length === 0} onClick={onStartWorkout}>
+        Aloita treeni{selectedMovements.length > 0 ? ` (${selectedMovements.length})` : ''}
+      </button>
     </>
   )
 }
