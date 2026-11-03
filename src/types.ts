@@ -1,10 +1,11 @@
-export type Screen = 'home' | 'movements' | 'session' | 'summary'
-export type Filter = 'Kaikki' | 'Ylävartalo' | 'Alavartalo'
+export type Screen = 'home' | 'movements' | 'session' | 'summary' | 'statistics'
+export type MovementCategory = 'Rinta' | 'Selkä' | 'Jalat' | 'Olkapäät' | 'Kädet'
+export type Filter = 'Kaikki' | MovementCategory
 export type GlyphName = 'home' | 'search' | 'chart' | 'calendar' | 'dumbbell' | 'target' | 'clock' | 'sliders' | 'bell' | 'close' | 'chevron' | 'share'
 
 export type Movement = {
   name: string
-  category: Filter | ''
+  category: MovementCategory
   duration: string
   icon: GlyphName
 }
@@ -23,4 +24,9 @@ export type WorkoutRecord = {
   id: string
   completedAt: string
   exercises: CompletedExercise[]
+}
+
+export type CategoryStat = {
+  category: MovementCategory
+  count: number
 }

@@ -5,8 +5,10 @@ import movements from './data/movements'
 import HomeScreen from './screens/HomeScreen'
 import MovementScreen from './screens/MovementScreen'
 import SessionScreen from './screens/SessionScreen'
+import StatisticsScreen from './screens/StatisticsScreen'
 import SummaryScreen from './screens/SummaryScreen'
-import type { CompletedExercise, Filter, Screen, WorkoutRecord } from './types'
+import type { CategoryStat, CompletedExercise, Filter, MovementCategory, Screen, WorkoutRecord } from './types'
+import { movementCategories } from './data/movements'
 
 const workoutStorageKey = 'gymapp-recent-workouts'
 
@@ -35,6 +37,23 @@ function App() {
     const matchesFilter = filter === 'Kaikki' || movement.category === filter
     return matchesFilter && movement.name.toLocaleLowerCase('fi').includes(query.toLocaleLowerCase('fi'))
   })
+
+  const categoryCounts = movementCategories.reduce<Record<MovementCategory, number>>((counts, category) => {
+    counts[category] = 0
+    return counts
+  }, {} as Record<MovementCategory, number>)
+
+  recentWorkouts.forEach((workout) => {
+    workout.exercises.forEach((exercise) => {
+      const category = movements.find((movement) => movement.name === exercise.name)?.category
+      if (category) categoryCounts[category] += exercise.sets.length
+    })
+  })
+
+  const categoryStats: CategoryStat[] = movementCategories.map((category) => ({
+    category,
+    count: categoryCounts[category],
+  }))
 
   function startWorkout(movementNames: string[] = ['Pystypunnerrus']) {
     setWorkoutMovements(movementNames)
@@ -142,6 +161,8 @@ function App() {
             onNewWorkout={() => startWorkout()}
           />
         )}
+
+        {screen === 'statistics' && <StatisticsScreen stats={categoryStats} />}
       </div>
 
       <nav className="bottom-nav" aria-label="Päänavigaatio">
@@ -149,7 +170,7 @@ function App() {
         <button className={screen === 'movements' ? 'is-active' : ''} onClick={() => changeScreen('movements')}><Glyph name="search" /><span>Liikkeet</span></button>
         <button className={screen === 'session' ? 'is-active' : ''} onClick={() => screen === 'session' ? undefined : startWorkout(selectedMovements.length > 0 ? selectedMovements : ['Pystypunnerrus'])}><Glyph name="dumbbell" /><span>Treeni</span></button>
         <button className={screen === 'summary' ? 'is-active' : ''} onClick={() => changeScreen('summary')}><Glyph name="chart" /><span>Yhteenveto</span></button>
-        <button onClick={() => changeScreen('movements')}><Glyph name="calendar" /><span>Suunnitelma</span></button>
+        <button className={screen === 'statistics' ? 'is-active' : ''} onClick={() => changeScreen('statistics')}><Glyph name="chart" /><span>Tilastot</span></button>
       </nav>
     </main>
   )

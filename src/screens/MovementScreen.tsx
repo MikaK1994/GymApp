@@ -1,4 +1,5 @@
 import Glyph from '../components/Glyph'
+import { movementCategories } from '../data/movements'
 import type { Filter, Movement } from '../types'
 
 type MovementScreenProps = {
@@ -26,7 +27,7 @@ function MovementScreen({ filter, query, selectedMovements, movements, onFilterC
       </label>
 
       <div className="filter-row" role="group" aria-label="Liikeryhmä">
-        {(['Kaikki', 'Ylävartalo', 'Alavartalo'] as const).map((option) => (
+        {(['Kaikki', ...movementCategories] as const).map((option) => (
           <button key={option} className={`filter-chip${filter === option ? ' is-active' : ''}`} onClick={() => onFilterChange(option)}>{option}</button>
         ))}
       </div>
