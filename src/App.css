@@ -118,6 +118,20 @@
   margin-top: 8px;
 }
 
+.recent-workout.is-highlighted {
+  animation: recent-workout-glow 2.6s ease-out both;
+}
+
+@keyframes recent-workout-glow {
+  0%,
+  65% {
+    box-shadow: 0 0 0 2px rgb(103 232 165 / 75%), 0 0 22px rgb(103 232 165 / 35%);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgb(103 232 165 / 0%), 0 0 0 rgb(103 232 165 / 0%);
+  }
+}
+
 .recent-workout-trigger {
   width: 100%;
   min-height: 48px;
@@ -544,8 +558,28 @@
 }
 
 .summary-set strong {
+  margin-left: auto;
   color: var(--app-text);
   font-size: 11px;
+  text-align: right;
+}
+
+.delete-set-button {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: #fca5a5;
+  background: transparent;
+}
+
+.delete-set-button:hover {
+  color: #fff;
+  background: #7f1d1d;
 }
 
 .summary-actions {
@@ -590,6 +624,11 @@
 
 .bottom-nav button.is-active {
   color: var(--app-text);
+}
+
+.bottom-nav button:disabled {
+  cursor: not-allowed;
+  opacity: 0.38;
 }
 
 .bottom-nav svg {
@@ -705,4 +744,11 @@
   color: var(--app-muted);
   font-size: 9px;
   font-weight: 400;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .recent-workout.is-highlighted {
+    animation: none;
+    outline: 1px solid #67e8a5;
+  }
 }

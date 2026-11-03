@@ -4,6 +4,7 @@ import type { CompletedExercise } from '../types/types'
 type SummaryScreenProps = {
   exercises: CompletedExercise[]
   onShowMovements: () => void
+  onDeleteSet: (exerciseName: string, setIndex: number) => void
   onSaveWorkout: () => void
   onNewWorkout: () => void
 }
@@ -12,7 +13,7 @@ function formatWeight(value: number) {
   return `${Number.isInteger(value) ? value : value.toFixed(1).replace('.', ',')} kg`
 }
 
-function SummaryScreen({ exercises, onShowMovements, onSaveWorkout, onNewWorkout }: SummaryScreenProps) {
+function SummaryScreen({ exercises, onShowMovements, onDeleteSet, onSaveWorkout, onNewWorkout }: SummaryScreenProps) {
   return (
     <>
       <header className="page-header page-header--summary">
@@ -33,6 +34,7 @@ function SummaryScreen({ exercises, onShowMovements, onSaveWorkout, onNewWorkout
                 <div className="summary-set" key={`${exercise.name}-${index}`}>
                   <span>Sarja {index + 1}</span>
                   <strong>{formatWeight(set.weight)} × {set.reps} toistoa</strong>
+                  <button className="delete-set-button" type="button" aria-label={`Poista ${exercise.name}, sarja ${index + 1}`} onClick={() => onDeleteSet(exercise.name, index)}><Glyph name="trash" /></button>
                 </div>
               ))}
             </div>

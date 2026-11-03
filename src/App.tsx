@@ -14,6 +14,7 @@ const workoutStorageKey = 'gymapp-recent-workouts'
 
 function App() {
   const [screen, setScreen] = useState<Screen>('home')
+  const [workoutStatus, setWorkoutStatus] = useState<'idle' | 'active' | 'completed'>('idle')
   const [filter, setFilter] = useState<Filter>('Kaikki')
   const [query, setQuery] = useState('')
   const [selectedMovements, setSelectedMovements] = useState<string[]>([])
@@ -32,6 +33,7 @@ function App() {
   const [reps, setReps] = useState<number | ''>(5)
   const [savedSets, setSavedSets] = useState(0)
   const [sessionError, setSessionError] = useState('')
+  const [highlightedWorkoutId, setHighlightedWorkoutId] = useState<string | null>(null)
   const currentMovement = workoutMovements[currentMovementIndex] ?? 'Pystypunnerrus'
 
   const visibleMovements = movements.filter((movement) => {
@@ -57,6 +59,7 @@ function App() {
   }))
 
   function startWorkout(movementNames: string[] = ['Pystypunnerrus']) {
+    setWorkoutStatus('active')
     setWorkoutMovements(movementNames)
     setCurrentMovementIndex(0)
     setCompletedExercises([])
@@ -110,15 +113,33 @@ function App() {
 
   function finishWorkout() {
     if (!validateSession()) return
+    setSelectedMovements([])
+    setWorkoutStatus('completed')
+    changeScreen('summary')
+  }
+
+  function saveWorkout() {
     if (completedExercises.length > 0) {
+      const completedAt = new Date().toISOString()
       const workout: WorkoutRecord = {
-        id: new Date().toISOString(),
-        completedAt: new Date().toISOString(),
+        id: completedAt,
+        completedAt,
         exercises: completedExercises,
       }
       setRecentWorkouts((recent) => [workout, ...recent].slice(0, 30))
+      setHighlightedWorkoutId(workout.id)
     }
-    changeScreen('summary')
+    setSelectedMovements([])
+    setWorkoutStatus('idle')
+    changeScreen('home')
+  }
+
+  function deleteSet(exerciseName: string, setIndex: number) {
+    setCompletedExercises((exercises) => exercises.flatMap((exercise) => {
+      if (exercise.name !== exerciseName) return [exercise]
+      const sets = exercise.sets.filter((_, index) => index !== setIndex)
+      return sets.length > 0 ? [{ ...exercise, sets }] : []
+    }))
   }
 
   function changeScreen(nextScreen: Screen) {
@@ -136,6 +157,7 @@ function App() {
         {screen === 'home' && (
           <HomeScreen
             recentWorkouts={recentWorkouts}
+            highlightedWorkoutId={highlightedWorkoutId}
             onOpenMovements={() => changeScreen('movements')}
           />
         )}
@@ -178,7 +200,8 @@ function App() {
           <SummaryScreen
             exercises={completedExercises}
             onShowMovements={() => changeScreen('movements')}
-            onSaveWorkout={() => changeScreen('home')}
+            onDeleteSet={deleteSet}
+            onSaveWorkout={saveWorkout}
             onNewWorkout={() => startWorkout()}
           />
         )}
@@ -189,8 +212,8 @@ function App() {
       <nav className="bottom-nav" aria-label="Päänavigaatio">
         <button className={screen === 'home' ? 'is-active' : ''} onClick={() => changeScreen('home')}><Glyph name="home" /><span>Etusivu</span></button>
         <button className={screen === 'movements' ? 'is-active' : ''} onClick={() => changeScreen('movements')}><Glyph name="search" /><span>Liikkeet</span></button>
-        <button className={screen === 'session' ? 'is-active' : ''} onClick={() => screen === 'session' ? undefined : startWorkout(selectedMovements.length > 0 ? selectedMovements : ['Pystypunnerrus'])}><Glyph name="dumbbell" /><span>Treeni</span></button>
-        <button className={screen === 'summary' ? 'is-active' : ''} onClick={() => changeScreen('summary')}><Glyph name="chart" /><span>Yhteenveto</span></button>
+        <button className={screen === 'session' ? 'is-active' : ''} disabled={workoutStatus !== 'active'} onClick={() => changeScreen('session')}><Glyph name="dumbbell" /><span>Treeni</span></button>
+        <button className={screen === 'summary' ? 'is-active' : ''} disabled={workoutStatus === 'idle'} onClick={() => changeScreen('summary')}><Glyph name="chart" /><span>Yhteenveto</span></button>
         <button className={screen === 'statistics' ? 'is-active' : ''} onClick={() => changeScreen('statistics')}><Glyph name="chart" /><span>Tilastot</span></button>
       </nav>
     </main>

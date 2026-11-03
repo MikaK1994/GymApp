@@ -1,7 +1,7 @@
 export type Screen = 'home' | 'movements' | 'session' | 'summary' | 'statistics'
 export type MovementCategory = 'Rinta' | 'Selkä' | 'Jalat' | 'Olkapäät' | 'Kädet'
 export type Filter = 'Kaikki' | MovementCategory
-export type GlyphName = 'home' | 'search' | 'chart' | 'calendar' | 'dumbbell' | 'target' | 'clock' | 'sliders' | 'bell' | 'close' | 'chevron' | 'share' | 'plus' | 'minus' | 'check'
+export type GlyphName = 'home' | 'search' | 'chart' | 'calendar' | 'dumbbell' | 'target' | 'clock' | 'sliders' | 'bell' | 'close' | 'chevron' | 'share' | 'plus' | 'minus' | 'check' | 'trash'
 
 export type Movement = {
   name: string

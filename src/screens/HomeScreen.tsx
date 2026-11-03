@@ -4,6 +4,7 @@ import type { WorkoutRecord } from '../types/types'
 
 type HomeScreenProps = {
   recentWorkouts: WorkoutRecord[]
+  highlightedWorkoutId: string | null
   onOpenMovements: () => void
 }
 
@@ -15,7 +16,7 @@ function formatWorkoutDate(value: string) {
   return new Intl.DateTimeFormat('fi-FI', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(value))
 }
 
-function HomeScreen({ recentWorkouts, onOpenMovements }: HomeScreenProps) {
+function HomeScreen({ recentWorkouts, highlightedWorkoutId, onOpenMovements }: HomeScreenProps) {
   const [expandedWorkoutId, setExpandedWorkoutId] = useState<string | null>(null)
 
   return (
@@ -32,7 +33,7 @@ function HomeScreen({ recentWorkouts, onOpenMovements }: HomeScreenProps) {
             {recentWorkouts.map((workout) => {
               const isExpanded = expandedWorkoutId === workout.id
               return (
-                <article className="recent-workout" key={workout.id}>
+                <article className={`recent-workout${workout.id === highlightedWorkoutId ? ' is-highlighted' : ''}`} key={workout.id}>
                   <button
                     className="recent-workout-trigger"
                     type="button"
