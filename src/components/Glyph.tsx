@@ -51,6 +51,8 @@ function Glyph({ name, size = 18 }: GlyphProps) {
       return <svg {...common}><path d="m5 12 4 4L19 6" /></svg>
     case 'trash':
       return <svg {...common}><path d="M3 6h18m-2 0-.8 14H5.8L5 6m4 0V4h6v2m-5 4v6m4-6v6" /></svg>
+    case 'book':
+      return <svg {...common}><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 0 4 22zM4 5.5v14A2.5 2.5 0 0 1 6.5 17H20" /></svg>
   }
 }
 

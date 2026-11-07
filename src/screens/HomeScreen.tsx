@@ -6,6 +6,7 @@ type HomeScreenProps = {
   recentWorkouts: WorkoutRecord[]
   highlightedWorkoutId: string | null
   onOpenMovements: () => void
+  onOpenGuides: () => void
 }
 
 function formatWeight(value: number) {
@@ -16,7 +17,7 @@ function formatWorkoutDate(value: string) {
   return new Intl.DateTimeFormat('fi-FI', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(value))
 }
 
-function HomeScreen({ recentWorkouts, highlightedWorkoutId, onOpenMovements }: HomeScreenProps) {
+function HomeScreen({ recentWorkouts, highlightedWorkoutId, onOpenMovements, onOpenGuides }: HomeScreenProps) {
   const [expandedWorkoutId, setExpandedWorkoutId] = useState<string | null>(null)
 
   return (
@@ -64,7 +65,10 @@ function HomeScreen({ recentWorkouts, highlightedWorkoutId, onOpenMovements }: H
         </section>
       )}
 
-      <button className="button button--outline home-cta" onClick={onOpenMovements}>Valitse liikkeet</button>
+      <div className="home-actions">
+        <button className="button button--outline" onClick={onOpenMovements}>Valitse liikkeet</button>
+        <button className="button button--filled" onClick={onOpenGuides}><Glyph name="book" />Liikkeiden ohjeet</button>
+      </div>
     </>
   )
 }
