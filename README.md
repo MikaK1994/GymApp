@@ -1,78 +1,171 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# 🏋️ GymApp
 
-Currently, two official plugins are available:
+### Kuntosaliharjoittelun seurantasovellus
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+GymApp on Reactilla ja TypeScriptillä toteutettu frontend-sovellus kuntosaliharjoittelun suunnitteluun ja seurantaan.
 
-## React Compiler
+Sovelluksen avulla käyttäjä voi valita harjoitusliikkeitä, kirjata harjoitusten painoja ja toistomääriä, tarkastella harjoitushistoriaansa sekä seurata harjoitteluaan lihasryhmittäin.
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+*Projekti on toteutettu osana frontend-kehityksen kurssia.*
 
-Note: This will impact Vite dev & build performances.
-You can also try [the experimental native React Compiler support in plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md#rust-react-compiler) by using `compiler: true` in the plugin options instead of using the Babel plugin.
+---
 
-## Expanding the ESLint configuration
+## ✨ Ominaisuudet
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- 🔍 **Liikkeiden selaaminen:** Harjoitusliikkeiden hakeminen ja suodattaminen lihasryhmän mukaan.
+- 📖 **Liikeohjeet:** Liikekohtaiset suoritusohjeet ja kuvat.
+- 💪 **Harjoituksen kirjaaminen:** Painojen ja toistomäärien tallentaminen.
+- 📊 **Harjoitusyhteenveto:** Suoritettujen harjoitusten ja sarjojen tarkastelu.
+- 📅 **Harjoitushistoria:** Aikaisempien harjoitusten tallentaminen.
+- 📈 **Tilastot:** Harjoittelun seuranta lihasryhmittäin.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 🛠️ Teknologiat
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+| Teknologia | Käyttötarkoitus |
+|---|---|
+| React 19 | Käyttöliittymä |
+| TypeScript | Tyypitys |
+| Vite | Kehitysympäristö ja build |
+| CSS | Käyttöliittymän tyylit |
+| Local Storage | Paikallinen tiedontallennus |
+| ESLint | Koodin laadun tarkistus |
+| GitHub Actions | CI-automaatiot |
 
+---
+
+## 📁 Projektin rakenne
+
+```text
+GymApp/
+├── public/
+├── .github/
+│   └── workflows/
+│       └── ci.yml
+├── src/
+│   ├── assets/
+│   ├── components/
+│   │   └── Glyph.tsx
+│   ├── data/
+│   │   └── movements.tsx
+│   ├── screens/
+│   │   ├── HomeScreen.tsx
+│   │   ├── MovementScreen.tsx
+│   │   ├── MovementGuidesScreen.tsx
+│   │   ├── SessionScreen.tsx
+│   │   ├── StatisticsScreen.tsx
+│   │   └── SummaryScreen.tsx
+│   ├── types/
+│   │   └── types.tsx
+│   ├── App.tsx
+│   ├── App.css
+│   ├── index.css
+│   └── main.tsx
+├── package.json
+├── tsconfig.json
+└── vite.config.ts
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🚀 Asentaminen ja käynnistäminen
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Vaatimukset
 
+- Node.js
+- npm
+
+### 1. Kloonaa repositorio
+
+```bash
+git clone https://github.com/MikaK1994/GymApp.git
 ```
+
+### 2. Siirry projektikansioon
+
+```bash
+cd GymApp
+```
+
+### 3. Asenna riippuvuudet
+
+```bash
+npm install
+```
+
+### 4. Käynnistä kehityspalvelin
+
+```bash
+npm run dev
+```
+
+Avaa terminaalissa ilmoitettu paikallinen osoite selaimessa.
+
+---
+
+## ⚙️ Käytettävissä olevat komennot
+
+| Komento | Kuvaus |
+|---|---|
+| `npm run dev` | Käynnistää kehityspalvelimen |
+| `npm run build` | Suorittaa TypeScript-tarkistuksen ja tuotantobuildin |
+| `npm run lint` | Suorittaa ESLint-tarkistuksen |
+| `npm run preview` | Käynnistää tuotantoversion esikatselun |
+
+---
+
+## 🏗️ Arkkitehtuuri
+
+Sovelluksen tilanhallinta on keskitetty pääasiassa `App.tsx`-komponenttiin.
+
+Käyttöliittymä on jaettu erillisiin näkymäkomponentteihin (`screens`), uudelleenkäytettäviin komponentteihin (`components`), staattiseen harjoitusdataan (`data`) sekä TypeScript-tyypityksiin (`types`).
+
+Tietoa välitetään näkymille propsien ja callback-funktioiden avulla.
+
+### Tiedon tallennus
+
+Harjoitushistoria tallennetaan selaimen Local Storageen.
+
+Sovelluksessa ei tällä hetkellä ole erillistä backend-palvelua tai ulkoista API-integraatiota.
+
+---
+
+## ✅ Laadunvarmistus ja CI
+
+Projektissa käytetään ESLintiä ja TypeScriptin tarkistuksia koodin laadun varmistamiseen.
+
+GitHub Actions suorittaa automaattisesti seuraavat vaiheet:
+
+1. Lähdekoodin haku GitHubista.
+2. Node.js-ympäristön käyttöönotto.
+3. Riippuvuuksien asennus.
+4. ESLint-tarkistus.
+5. Tuotantoversion rakentaminen.
+
+CI käynnistyy automaattisesti, kun muutoksia pushataan `main`-haaraan tai avataan pull request siihen.
+
+---
+
+## 🔧 Tunnetut rajoitukset ja jatkokehitys
+
+- Harjoitustiedot tallennetaan selaimen Local Storageen.
+- Tietoja ei synkronoida eri laitteiden välillä.
+- Käyttäjätunnistusta tai backend-palvelua ei ole toteutettu.
+- Automaattista yksikkötestausta voidaan laajentaa.
+- Local Storage -datan ajonaikaista validointia voidaan vahvistaa.
+
+---
+
+## 📌 Projektin tila
+
+GymAppin keskeiset toiminnallisuudet on toteutettu ja testattu manuaalisesti.
+
+TypeScript-tarkistus, tuotantobuild ja ESLint-tarkistus on suoritettu onnistuneesti. GitHub Actions -pohjainen CI-prosessi on käytössä ja sen suoritus on testattu onnistuneesti.
+
+---
+
+**Tekijä:** MikaK1994
+
+**Projektin lähdekoodi:** [GitHub – GymApp](https://github.com/MikaK1994/GymApp)
