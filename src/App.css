@@ -327,11 +327,7 @@
   display: grid;
   gap: 9px;
   flex: 0 0 auto;
-  margin-top: auto;
-}
-
-.home-actions .button {
-  min-height: 42px;
+  margin-top: 8px;
 }
 
 .home-actions .button svg {
